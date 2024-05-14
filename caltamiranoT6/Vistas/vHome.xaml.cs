@@ -6,7 +6,7 @@ namespace caltamiranoT6.Vistas;
 
 public partial class vHome : ContentPage
 {
-    private const string url = "http://127.0.0.1:80/appMovil/post.php";
+    private const string url = "http://192.168.17.23/appmovil/post.php";
     private readonly HttpClient cliente = new HttpClient();
     private ObservableCollection<Estudiantes> estuadientes;
     public vHome()
@@ -20,5 +20,16 @@ public partial class vHome : ContentPage
         List<Estudiantes> ListEs = JsonConvert.DeserializeObject<List<Estudiantes>>(content);
         estuadientes = new ObservableCollection<Estudiantes>(ListEs);
         listaEstudiantes.ItemsSource = estuadientes;
+    }
+
+    private void btnAgregar_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new Vistas.vAgregar());
+    }
+
+    private void listaEstudiantes_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+        var objectestudiante = (Estudiantes)e.SelectedItem;
+        Navigation.PushAsync(new vActualizarEliminar(objectestudiante));
     }
 }
